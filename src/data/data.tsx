@@ -136,7 +136,7 @@ export const skills: SkillGroup[] = [
     skills: [
       {
         name: 'ROS/ROS2',
-        level: 8,
+        level: 9,
       },
       {
         name: 'Robotic Arms(VLAs)',
