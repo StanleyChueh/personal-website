@@ -11,7 +11,7 @@ import {
 import GithubIcon from '../components/Icon/GithubIcon';
 import InstagramIcon from '../components/Icon/InstagramIcon';
 import LinkedInIcon from '../components/Icon/LinkedInIcon';
-import StackOverflowIcon from '../components/Icon/StackOverflowIcon';
+import YoutubeIcon from '../components/Icon/YoutubeIcon';
 import TwitterIcon from '../components/Icon/TwitterIcon';
 import heroImage from '../images/header-background.webp';
 import porfolioImage1 from '../images/portfolio/portfolio-1.jpg';
@@ -25,7 +25,7 @@ import porfolioImage8 from '../images/portfolio/portfolio-8.jpg';
 import porfolioImage9 from '../images/portfolio/portfolio-9.jpg';
 import porfolioImage10 from '../images/portfolio/portfolio-10.jpg';
 import porfolioImage11 from '../images/portfolio/portfolio-11.jpg';
-import profilepic from '../images/profilepic.jpg';
+import profilepic from '../images/test.png';
 import testimonialImage from '../images/testimonial.webp';
 import {
   About,
@@ -69,19 +69,14 @@ export type SectionId = (typeof SectionId)[keyof typeof SectionId];
  */
 export const heroData: Hero = {
   imageSrc: heroImage,
-  name: `I'm Tim Baker.`,
+  name: `I'm Stanley Chueh.`,
   description: (
     <>
       <p className="prose-sm text-stone-200 sm:prose-base lg:prose-lg">
-        I'm a Victoria based <strong className="text-stone-100">Full Stack Software Engineer</strong>, currently working
-        at <strong className="text-stone-100">Instant Domains</strong> helping build a modern, mobile-first, domain
-        registrar and site builder.
-      </p>
-      <p className="prose-sm text-stone-200 sm:prose-base lg:prose-lg">
-        In my free time time, you can catch me training in <strong className="text-stone-100">Muay Thai</strong>,
-        plucking my <strong className="text-stone-100">banjo</strong>, or exploring beautiful{' '}
-        <strong className="text-stone-100">Vancouver Island</strong>.
-      </p>
+        I'm currently a first-year master's student studying Electrical Engineering at <strong className="text-stone-100"><a href="https://www-en.ntut.edu.tw/" target="_blank" rel="noopener noreferrer">Taipei Tech</a></strong>,
+        working as a research assistant in <strong className="text-stone-100"><a href="https://www.csltaipeitech.com/" target="_blank" rel="noopener noreferrer">City Science Lab@Taipei Tech</a></strong>. My advisor is
+        <strong className="text-stone-100"><a href="https://sites.google.com/mail.ntut.edu.tw/vpilab/advisor?authuser=0" target="_blank" rel="noopener noreferrer"> Cheng-Ming Huang</a></strong>.
+      </p> 
     </>
   ),
   actions: [
@@ -104,16 +99,14 @@ export const heroData: Hero = {
  */
 export const aboutData: About = {
   profileImageSrc: profilepic,
-  description: `Use this bio section as your way of describing yourself and saying what you do, what technologies you like
-  to use or feel most comfortable with, describing your personality, or whatever else you feel like throwing
-  in.`,
+  description: `My study interests include Visual Language Action Models (VLA) for robotic arms,vision-based and LiDAR-based robot navigation.`,
   aboutItems: [
-    {label: 'Location', text: 'Victoria, BC', Icon: MapIcon},
-    {label: 'Age', text: '29', Icon: CalendarIcon},
-    {label: 'Nationality', text: 'Canadian / Irish', Icon: FlagIcon},
-    {label: 'Interests', text: 'Motorcycles, Muay Thai, Banjos', Icon: SparklesIcon},
-    {label: 'Study', text: 'University of Victoria', Icon: AcademicCapIcon},
-    {label: 'Employment', text: 'Instant Domains, inc.', Icon: BuildingOffice2Icon},
+    {label: 'Location', text: 'Taipei, Taiwan', Icon: MapIcon},
+    {label: 'Age', text: '22', Icon: CalendarIcon},
+    {label: 'Nationality', text: 'Taiwan(R.O.C)', Icon: FlagIcon},
+    {label: 'Interests', text: 'Music, Bodybuilding', Icon: SparklesIcon},
+    {label: 'Study', text: 'Taipei Tech', Icon: AcademicCapIcon},
+    {label: 'Employment', text: 'Research Assistant @ City Science Lab', Icon: BuildingOffice2Icon},
   ],
 };
 
@@ -125,67 +118,33 @@ export const skills: SkillGroup[] = [
     name: 'Spoken languages',
     skills: [
       {
-        name: 'English',
+        name: 'Mandarin Chinese',
         level: 10,
       },
       {
-        name: 'French',
-        level: 4,
-      },
-      {
-        name: 'Spanish',
-        level: 3,
-      },
-    ],
-  },
-  {
-    name: 'Frontend development',
-    skills: [
-      {
-        name: 'React',
+        name: 'English',
         level: 9,
       },
       {
-        name: 'Typescript',
-        level: 7,
-      },
-      {
-        name: 'GraphQL',
-        level: 6,
+        name: 'French',
+        level: 2,
       },
     ],
   },
   {
-    name: 'Backend development',
+    name: 'Robotic development',
     skills: [
       {
-        name: 'Node.js',
+        name: 'ROS/ROS2',
         level: 8,
       },
       {
-        name: 'Rust',
-        level: 5,
+        name: 'Robotic Arms(VLAs)',
+        level: 7,
       },
       {
-        name: 'Golang',
-        level: 4,
-      },
-    ],
-  },
-  {
-    name: 'Mobile development',
-    skills: [
-      {
-        name: 'React Native',
-        level: 9,
-      },
-      {
-        name: 'Flutter',
-        level: 4,
-      },
-      {
-        name: 'Swift',
-        level: 3,
+        name: 'Navigation Algorithms',
+        level: 6,
       },
     ],
   },
@@ -268,39 +227,39 @@ export const portfolioItems: PortfolioItem[] = [
  */
 export const education: TimelineItem[] = [
   {
-    date: 'April 2007',
-    location: 'Clown college',
-    title: 'Masters in Beer tasting',
-    content: <p>Describe your experience at school, what you learned, what useful skills you have acquired etc.</p>,
+    date: 'Sep 2025 - Present',
+    location: 'Taipei Tech',
+    title: 'Masters in Electrical Engineering',
+    content: <p>Study interests include Robotic Arms, Image Processing, and Vision-based and LiDAR-based Robot Navigation(Overall GPA: 4.0)</p>,
   },
   {
-    date: 'March 2003',
-    location: 'School of Business',
-    title: 'What did you study 101',
-    content: <p>Describe your experience at school, what you learned, what useful skills you have acquired etc.</p>,
+    date: 'Sep 2021 - June 2025',
+    location: 'Taipei Tech',
+    title: 'Bachelor in Electrical Engineering',
+    content: <p>Study interests include Image Processing, data augmentation in computer vision, and robot navigation(Overall GPA: 3.72)</p>,
   },
 ];
 
 export const experience: TimelineItem[] = [
   {
-    date: 'March 2010 - Present',
-    location: 'Awesome Development Company',
-    title: 'Senior UX Engineer',
+    date: 'Sep 2023 - Present',
+    location: 'City Science Lab@Taipei Tech',
+    title: 'Research assistant',
     content: (
       <p>
-        Describe work, special projects, notable achievements, what technologies you have been working with, and
-        anything else that would be useful for an employer to know.
+        Assisting in developing an autonomous map-switching system for robot navigation,
+        vision-based robot navigation systems for indoor environments, and co-leading the VLA project for robotic arms.
       </p>
     ),
   },
   {
-    date: 'March 2007 - February 2010',
-    location: 'Garage Startup Studio',
-    title: 'Junior bug fixer',
+    date: 'Aug 2023 - Nov 2024',
+    location: 'InstAI, remote',
+    title: 'Research assistant',
     content: (
       <p>
-        Describe work, special projects, notable achievements, what technologies you have been working with, and
-        anything else that would be useful for an employer to know.
+        Assisted in developing an autonomous image recognition system for edge devices, which is an end-to-end system allowing users to capture a small amount
+        of data and, through data augmentation and model training, deploy a custom image recognition model on edge devices.
       </p>
     ),
   },
@@ -355,8 +314,8 @@ export const contact: ContactSection = {
     },
     {
       type: ContactType.Github,
-      text: 'tbakerx',
-      href: 'https://github.com/tbakerx',
+      text: 'StanleyChueh',
+      href: 'https://github.com/StanleyChueh',
     },
   ],
 };
@@ -365,9 +324,8 @@ export const contact: ContactSection = {
  * Social items
  */
 export const socialLinks: Social[] = [
-  {label: 'Github', Icon: GithubIcon, href: 'https://github.com/tbakerx'},
-  {label: 'Stack Overflow', Icon: StackOverflowIcon, href: 'https://stackoverflow.com/users/8553186/tim-baker'},
-  {label: 'LinkedIn', Icon: LinkedInIcon, href: 'https://www.linkedin.com/in/timbakerx/'},
-  {label: 'Instagram', Icon: InstagramIcon, href: 'https://www.instagram.com/reactresume/'},
-  {label: 'Twitter', Icon: TwitterIcon, href: 'https://twitter.com/TimBakerx'},
+  {label: 'Github', Icon: GithubIcon, href: 'https://github.com/StanleyChueh'},
+  {label: 'Youtube', Icon: YoutubeIcon, href: 'https://www.youtube.com/@Stanley_Chueh'},
+  {label: 'LinkedIn', Icon: LinkedInIcon, href: 'https://www.linkedin.com/in/stanley-chueh-239421303'},
+  {label: 'Instagram', Icon: InstagramIcon, href: 'https://www.instagram.com/stanley_chueh/'},
 ];
