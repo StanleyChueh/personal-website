@@ -1,4 +1,4 @@
-yarn deb
+yarn dev
 
 # React JS Resume Website Template
 
