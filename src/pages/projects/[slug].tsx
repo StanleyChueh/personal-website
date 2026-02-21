@@ -1,6 +1,9 @@
 import {FC} from 'react';
-import {useRouter} from 'next/router';
 import Link from 'next/link';
+import {GetStaticPaths, GetStaticProps} from 'next';
+
+// Get basePath for static assets
+const basePath = process.env.NODE_ENV === 'production' ? '/personal-website' : '';
 
 // Define all your projects here
 const projects: Record<string, {
@@ -498,16 +501,37 @@ const projects: Record<string, {
   },
 };
 
-const ProjectPage: FC = () => {
-  const router = useRouter();
-  const {slug} = router.query;
+// Required for static export - generates all project pages at build time
+export const getStaticPaths: GetStaticPaths = async () => {
+  const paths = Object.keys(projects).map((slug) => ({
+    params: {slug},
+  }));
 
-  // Handle loading state
-  if (!slug) {
-    return <div className="min-h-screen bg-neutral-900" />;
+  return {
+    paths,
+    fallback: false,
+  };
+};
+
+export const getStaticProps: GetStaticProps = async ({params}) => {
+  const slug = params?.slug as string;
+  
+  // Check if project exists
+  if (!projects[slug]) {
+    return {
+      notFound: true,
+    };
   }
 
-  const project = typeof slug === 'string' ? projects[slug] : null;
+  return {
+    props: {
+      slug,
+    },
+  };
+};
+
+const ProjectPage: FC<{slug: string}> = ({slug}) => {
+  const project = projects[slug];
 
   // Handle project not found
   if (!project) {
@@ -560,7 +584,7 @@ const ProjectPage: FC = () => {
                     controls
                     className="w-full rounded-lg shadow-lg"
                   >
-                    <source src={video.src} type="video/mp4" />
+                    <source src={`${basePath}${video.src}`} type="video/mp4" />
                   </video>
                   <p className="text-sm text-gray-400 mt-2">{video.caption}</p>
                 </div>
@@ -577,7 +601,7 @@ const ProjectPage: FC = () => {
               {project.images.map((image, index) => (
                 <div key={index}>
                   <img
-                    src={image.src}
+                    src={`${basePath}${image.src}`}
                     alt={image.caption}
                     className="w-full h-64 object-cover rounded-lg"
                   />
