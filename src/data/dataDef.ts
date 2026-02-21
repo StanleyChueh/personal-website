@@ -80,7 +80,21 @@ export interface PortfolioItem {
   title: string;
   description: string;
   url: string;
-  image: string | StaticImageData;
+  image?: string | StaticImageData;
+  video?: string;
+  youtubeId?: string;
+}
+
+export interface TimelinePoint {
+  date: string;
+  label: string;
+  completed: boolean;
+}
+
+export interface PortfolioGroup {
+  title: string;
+  items: PortfolioItem[];
+  timeline: TimelinePoint[];
 }
 
 /**
@@ -91,20 +105,6 @@ export interface TimelineItem {
   location: string;
   title: string;
   content: JSX.Element;
-}
-
-/**
- * Testimonial section
- */
-export interface TestimonialSection {
-  imageSrc?: string | StaticImageData;
-  testimonials: Testimonial[];
-}
-
-export interface Testimonial {
-  image?: string;
-  name: string;
-  text: string;
 }
 
 /**

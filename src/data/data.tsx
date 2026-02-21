@@ -13,29 +13,16 @@ import InstagramIcon from '../components/Icon/InstagramIcon';
 import LinkedInIcon from '../components/Icon/LinkedInIcon';
 import YoutubeIcon from '../components/Icon/YoutubeIcon';
 import heroImage from '../images/header-background.webp';
-import porfolioImage1 from '../images/portfolio/portfolio-1.jpg';
-import porfolioImage2 from '../images/portfolio/portfolio-2.jpg';
-import porfolioImage3 from '../images/portfolio/portfolio-3.jpg';
-import porfolioImage4 from '../images/portfolio/portfolio-4.jpg';
-import porfolioImage5 from '../images/portfolio/portfolio-5.jpg';
-import porfolioImage6 from '../images/portfolio/portfolio-6.jpg';
-import porfolioImage7 from '../images/portfolio/portfolio-7.jpg';
-import porfolioImage8 from '../images/portfolio/portfolio-8.jpg';
-import porfolioImage9 from '../images/portfolio/portfolio-9.jpg';
-import porfolioImage10 from '../images/portfolio/portfolio-10.jpg';
-import porfolioImage11 from '../images/portfolio/portfolio-11.jpg';
+import {PortfolioItem, PortfolioGroup} from './dataDef';
 import profilepic from '../images/test.png';
-import testimonialImage from '../images/testimonial.webp';
 import {
   About,
   ContactSection,
   ContactType,
   Hero,
   HomepageMeta,
-  PortfolioItem,
   SkillGroup,
   Social,
-  TestimonialSection,
   TimelineItem,
 } from './dataDef';
 
@@ -43,7 +30,7 @@ import {
  * Page meta data
  */
 export const homePageMeta: HomepageMeta = {
-  title: 'React Resume Template',
+  title: 'Stanley Chueh',
   description: "Example site built with Tim Baker's react resume template",
 };
 
@@ -58,7 +45,6 @@ export const SectionId = {
   Resume: 'resume',
   Skills: 'skills',
   Stats: 'stats',
-  Testimonials: 'testimonials',
 } as const;
 
 export type SectionId = (typeof SectionId)[keyof typeof SectionId];
@@ -74,7 +60,8 @@ export const heroData: Hero = {
       <p className="prose-sm text-stone-200 sm:prose-base lg:prose-lg">
         I'm currently a first-year master's student studying Electrical Engineering at <strong className="text-stone-100"><a href="https://www-en.ntut.edu.tw/" target="_blank" rel="noopener noreferrer">Taipei Tech</a></strong>,
         working as a research assistant in <strong className="text-stone-100"><a href="https://www.csltaipeitech.com/" target="_blank" rel="noopener noreferrer">City Science Lab@Taipei Tech</a></strong>. My advisor is
-        <strong className="text-stone-100"><a href="https://sites.google.com/mail.ntut.edu.tw/vpilab/advisor?authuser=0" target="_blank" rel="noopener noreferrer"> Cheng-Ming Huang</a></strong>.
+        <strong className="text-stone-100"><a href="https://sites.google.com/mail.ntut.edu.tw/vpilab/advisor?authuser=0" target="_blank" rel="noopener noreferrer"> Cheng-Ming Huang</a></strong> and 
+        <strong className="text-stone-100"><a href="https://www.media.mit.edu/people/mcllin/overview/" target="_blank" rel="noopener noreferrer"> Michael Lin</a></strong> .
       </p> 
     </>
   ),
@@ -150,74 +137,138 @@ export const skills: SkillGroup[] = [
 ];
 
 /**
- * Portfolio section
+ * Portfolio section - Grouped projects with timeline
+ */
+export const portfolioGroups: PortfolioGroup[] = [
+  {
+    title: 'Imitation Learning & VLA Development',
+    items: [
+      {
+        title: 'Action Chunking Transformer (ACT) on Koch Study',
+        description: 'Collecting training data with teleoperation.',
+        url: '/projects/koch-imitation-learning',
+        video: '/videos/koch_open_drawer.mp4',
+      },
+      {
+        title: 'Action Chunking Transformer (ACT) on Franka Emika Study',
+        description: 'Deploying trained model on real robot.',
+        url: '/projects/franka-imitation-learning',
+        video: '/videos/franka_open_drawer.mp4',
+      },
+      {
+        title: 'VLAs on Koch',
+        description: 'Training ACT model with collected data.',
+        url: '/projects/koch-vla',
+        video: '/videos/three_task_cut_4x_speed.mp4',
+      },
+      {
+        title: 'Real Robot Deployment',
+        description: 'Deploying trained model on real robot.',
+        url: '/projects/attention-heat-map',
+        video: '/videos/attention_vis_with_state.mp4',
+      },
+    ],
+    timeline: [
+      {date: 'Jan ~ May 2025', label: 'Koch with ACT', completed: true},
+      {date: 'Jun ~ Dec 2025', label: 'Franka Emika with ACT', completed: true},
+      {date: 'Jan ~ Feb 2026', label: 'Koch with VLAs', completed: true},
+      {date: 'Feb 2026~', label: 'Attention heat map(on going...)', completed: false},
+    ],
+  },
+  {
+    title: 'Autonomous Navigation System Development',
+    items: [
+      {
+        title: 'Multi-map switching system for robot navigation',
+        description: 'Collecting training data with teleoperation.',
+        url: '/projects/turtlebot-nav',
+        youtubeId: 'cTmAIjYQQr8',
+      },
+      {
+        title: 'Spot navigation in outdoor environments',
+        description: 'Deploying trained model on real robot.',
+        url: '/projects/spot-nav',
+        youtubeId: 'LI97OdDDBUY',
+      },
+      {
+        title: 'Visual navigation system for indoor environments',
+        description: 'Training ACT model with collected data.',
+        url: '/projects/triceratops-nav',
+        youtubeId: 'X7kAB2d0PGs',
+      },
+      {
+        title: 'Local planner development for visual navigation system',
+        description: 'Deploying trained model on real robot.',
+        url: '/projects/triceratops-local-planner',
+        youtubeId: 'knTCpoTfLF4',
+      },
+    ],
+    timeline: [
+      {date: 'Jan ~ Jun 2024', label: 'Multi-map switching system(Turtlebot)', completed: true},
+      {date: 'Jul ~ Oct 2024', label: 'Multi-map switching system(Spot)', completed: true},
+      {date: 'Nov ~ Dec 2024', label: 'Visual navigation system(Triceratops)', completed: true},
+      {date: 'Nov ~ Dec 2024', label: 'Local planner development(Triceratops)', completed: true},
+    ],
+  },
+];
+
+/**
+ * Portfolio section(not used) - Standalone projects without timeline
  */
 export const portfolioItems: PortfolioItem[] = [
   {
     title: 'Project title 1',
-    description: 'Give a short description of your project here.',
-    url: 'https://reactresume.com',
-    image: porfolioImage1,
+    description: 'Robotic arm performing a pick-and-place task using a VLA system.',
+    url: 'https://www.youtube.com/watch?v=8RHWoJiWaVc',
+    youtubeId: '8RHWoJiWaVc',
   },
   {
     title: 'Project title 2',
-    description: 'Give a short description of your project here.',
-    url: 'https://reactresume.com',
-    image: porfolioImage2,
+    description: 'Robotic arm performing a pick-and-place task using a VLA system.',
+    url: 'https://www.youtube.com/watch?v=mgxuhl4MoaA',
+    youtubeId: 'mgxuhl4MoaA',
   },
   {
     title: 'Project title 3',
-    description: 'Give a short description of your project here.',
-    url: 'https://reactresume.com',
-    image: porfolioImage3,
+    description: 'Robotic arm performing a manipulation task using a VLA system.',
+    url: 'https://www.youtube.com/watch?v=alRzf46FstQ',
+    youtubeId: 'alRzf46FstQ',
   },
   {
     title: 'Project title 4',
-    description: 'Give a short description of your project here.',
-    url: 'https://reactresume.com',
-    image: porfolioImage4,
+    description: 'Robotic arm performing a manipulation task using a VLA system.',
+    url: 'https://www.youtube.com/watch?v=qki0DOI2jGQ',
+    youtubeId: 'qki0DOI2jGQ',
   },
   {
     title: 'Project title 5',
-    description: 'Give a short description of your project here.',
-    url: 'https://reactresume.com',
-    image: porfolioImage5,
+    description: 'Robotic arm performing a manipulation task using a VLA system.',
+    url: 'https://www.youtube.com/watch?v=zfraKg9_tjE',
+    youtubeId: 'zfraKg9_tjE',
   },
   {
     title: 'Project title 6',
-    description: 'Give a short description of your project here.',
-    url: 'https://reactresume.com',
-    image: porfolioImage6,
+    description: 'Robotic arm performing a manipulation task using a VLA system.',
+    url: 'https://www.youtube.com/watch?v=knTCpoTfLF4',
+    youtubeId: 'knTCpoTfLF4',
   },
   {
     title: 'Project title 7',
-    description: 'Give a short description of your project here.',
-    url: 'https://reactresume.com',
-    image: porfolioImage7,
+    description: 'Robotic arm performing a manipulation task using a VLA system.',
+    url: 'https://www.youtube.com/watch?v=cTmAIjYQQr8',
+    youtubeId: 'cTmAIjYQQr8',
   },
   {
     title: 'Project title 8',
-    description: 'Give a short description of your project here.',
-    url: 'https://reactresume.com',
-    image: porfolioImage8,
+    description: 'Robotic arm performing a manipulation task using a VLA system.',
+    url: 'https://www.youtube.com/watch?v=m7VSAH6LK6I',
+    youtubeId: 'm7VSAH6LK6I',
   },
   {
     title: 'Project title 9',
-    description: 'Give a short description of your project here.',
-    url: 'https://reactresume.com',
-    image: porfolioImage9,
-  },
-  {
-    title: 'Project title 10',
-    description: 'Give a short description of your project here.',
-    url: 'https://reactresume.com',
-    image: porfolioImage10,
-  },
-  {
-    title: 'Project title 11',
-    description: 'Give a short description of your project here.',
-    url: 'https://reactresume.com',
-    image: porfolioImage11,
+    description: 'Robotic arm performing a manipulation task using a VLA system.',
+    url: 'https://www.youtube.com/watch?v=X7kAB2d0PGs',
+    youtubeId: 'X7kAB2d0PGs',
   },
 ];
 
@@ -265,30 +316,6 @@ export const experience: TimelineItem[] = [
 ];
 
 /**
- * Testimonial section
- */
-export const testimonial: TestimonialSection = {
-  imageSrc: testimonialImage,
-  testimonials: [
-    {
-      name: 'John Doe',
-      text: 'Use this as an opportunity to promote what it is like to work with you. High value testimonials include ones from current or past co-workers, managers, or from happy clients.',
-      image: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/169.jpg',
-    },
-    {
-      name: 'Jane Doe',
-      text: 'Here you should write some nice things that someone has said about you. Encourage them to be specific and include important details (notes about a project you were on together, impressive quality produced, etc).',
-      image: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/14.jpg',
-    },
-    {
-      name: 'Someone else',
-      text: 'Add several of these, and keep them as fresh as possible, but be sure to focus on quality testimonials with strong highlights of your skills/work ethic.',
-      image: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/69.jpg',
-    },
-  ],
-};
-
-/**
  * Contact section
  */
 
@@ -298,18 +325,18 @@ export const contact: ContactSection = {
   items: [
     {
       type: ContactType.Email,
-      text: 'reachout@timbaker.me',
-      href: 'mailto:reachout@timbaker.me',
+      text: 'stanleychueh28@gmail.com',
+      href: 'mailto:stanleychueh28@gmail.com',
     },
     {
       type: ContactType.Location,
-      text: 'Victoria BC, Canada',
-      href: 'https://www.google.ca/maps/place/Victoria,+BC/@48.4262362,-123.376775,14z',
+      text: 'Taipei, Taiwan',
+      href: 'https://www.google.ca/maps/place/Taipei,+Taiwan/@25.033022,121.565418,12z/data=!3m1!4b1!4m5!3m4!1s0x3442abfa7a9b8e75:0x1cbbdff8c490e0f!8m2!3d25.033964!4d121.564468',
     },
     {
       type: ContactType.Instagram,
-      text: '@tbakerx',
-      href: 'https://www.instagram.com/tbakerx/',
+      text: 'stanley_chueh',
+      href: 'https://www.instagram.com/stanley_chueh/',
     },
     {
       type: ContactType.Github,
