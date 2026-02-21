@@ -3,7 +3,9 @@ yarn dev
 https://stanleychueh.github.io/personal-website/
 
 git add .
+
 git commit -m "Update website"
+
 git push origin main
 
 # React JS Resume Website Template
