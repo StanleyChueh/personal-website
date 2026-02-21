@@ -9,6 +9,9 @@ import {PortfolioItem} from '../../data/dataDef';
 import useDetectOutsideClick from '../../hooks/useDetectOutsideClick';
 import Section from '../Layout/Section';
 
+// Get basePath for static assets
+const basePath = process.env.NODE_ENV === 'production' ? '/personal-website' : '';
+
 const Portfolio: FC = memo(() => {
   return (
     <Section className="bg-neutral-800" sectionId={SectionId.Portfolio}>
@@ -44,7 +47,7 @@ const Portfolio: FC = memo(() => {
                         muted
                         playsInline
                       >
-                        <source src={item.video} type="video/mp4" />
+                        <source src={`${basePath}${item.video}`} type="video/mp4" />
                       </video>
                     ) : item.image ? (
                       <Image
