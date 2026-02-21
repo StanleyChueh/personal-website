@@ -1,6 +1,7 @@
 import {ArrowTopRightOnSquareIcon} from '@heroicons/react/24/outline';
 import classNames from 'classnames';
 import Image from 'next/image';
+import Link from 'next/link';
 import {FC, memo, MouseEvent, useCallback, useEffect, useRef, useState} from 'react';
 
 import {isMobile} from '../../config';
@@ -107,6 +108,7 @@ const ItemOverlay: FC<{item: PortfolioItem}> = memo(({item: {url, title, descrip
   const [mobile, setMobile] = useState(false);
   const [showOverlay, setShowOverlay] = useState(false);
   const linkRef = useRef<HTMLAnchorElement>(null);
+  const isInternal = url.startsWith('/');
 
   useEffect(() => {
     // Avoid hydration styling errors by setting mobile in useEffect
@@ -126,24 +128,43 @@ const ItemOverlay: FC<{item: PortfolioItem}> = memo(({item: {url, title, descrip
     [mobile, showOverlay],
   );
 
+  const overlayContent = (
+    <div className="relative h-full w-full p-4">
+      <div className="flex h-full w-full flex-col gap-y-2 overflow-y-auto overscroll-contain">
+        <h2 className="text-center font-bold text-white opacity-100">{title}</h2>
+        <p className="text-xs text-white opacity-100 sm:text-sm">{description}</p>
+      </div>
+      <ArrowTopRightOnSquareIcon className="absolute bottom-1 right-1 h-4 w-4 shrink-0 text-white sm:bottom-2 sm:right-2" />
+    </div>
+  );
+
+  const className = classNames(
+    'absolute inset-0 h-full w-full  bg-gray-900 transition-all duration-300',
+    {'opacity-0 hover:opacity-80': !mobile},
+    showOverlay ? 'opacity-80' : 'opacity-0',
+  );
+
+  if (isInternal) {
+    return (
+      <Link
+        className={className}
+        href={url}
+        onClick={handleItemClick}
+        ref={linkRef}>
+        {overlayContent}
+      </Link>
+    );
+  }
+
   return (
     <a
-      className={classNames(
-        'absolute inset-0 h-full w-full  bg-gray-900 transition-all duration-300',
-        {'opacity-0 hover:opacity-80': !mobile},
-        showOverlay ? 'opacity-80' : 'opacity-0',
-      )}
+      className={className}
       href={url}
       onClick={handleItemClick}
       ref={linkRef}
-      target={url.startsWith('/') ? '_self' : '_blank'}>
-      <div className="relative h-full w-full p-4">
-        <div className="flex h-full w-full flex-col gap-y-2 overflow-y-auto overscroll-contain">
-          <h2 className="text-center font-bold text-white opacity-100">{title}</h2>
-          <p className="text-xs text-white opacity-100 sm:text-sm">{description}</p>
-        </div>
-        <ArrowTopRightOnSquareIcon className="absolute bottom-1 right-1 h-4 w-4 shrink-0 text-white sm:bottom-2 sm:right-2" />
-      </div>
+      target="_blank"
+      rel="noopener noreferrer">
+      {overlayContent}
     </a>
   );
 });
