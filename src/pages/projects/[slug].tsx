@@ -15,6 +15,7 @@ const projects: Record<string, {
   sections?: {title: string; content: string | JSX.Element}[];
   links?: {label: string; url: string}[];
 }> = {
+
   // Project 1(Imitation Learning & VLA Development)
   'koch-imitation-learning': {
     title: 'Imitation Learning & VLAs with low-cost robotic arm',
@@ -26,8 +27,7 @@ const projects: Record<string, {
       {src: '/videos/koch_open_draw.mp4', caption: 'Robot opening drawer demo'},
     ],
     images: [
-      {src: '/images/portfolio/franka-1.png', caption: 'System setup'},
-      {src: '/images/portfolio/franka-2.png', caption: 'Training process'},
+      {src: '/images/portfolio/Franka_open_drawer.png', caption: 'Training process'},
     ],
     youtubeIds: [
       {id: '8RHWoJiWaVc', caption: 'Full demonstration video'},
@@ -36,21 +36,146 @@ const projects: Record<string, {
       {
         title: 'Overview',
         content: (
-          <p>
-            This project demonstrates how robotic arms can learn using{' '}
-            <strong>Visual Language Action (VLA)</strong> models like <strong>SmolVLA & GR00T N1.5 </strong>and{' '}
-            <strong>imitation learning like Action Chunking Transformer(ACT) </strong>.
-          </p>
+          <div className="space-y-4">
+            <p>
+              This project demonstrates how low-cost robotic arms{' '}
+              <strong>
+                (<a href="https://github.com/jess-moss/koch-v1-1" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">Koch</a>)
+              </strong>{' '}
+              can learn using{' '}
+              <strong>Visual Language Action (VLA)</strong>{' '}
+              models like{' '}
+              <strong>
+                <a href="https://huggingface.co/docs/lerobot/smolvla" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">SmolVLA</a>
+              </strong>{' '}
+              &{' '}
+              <strong>
+                <a href="https://huggingface.co/docs/lerobot/groot" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">GR00T N1.5</a>
+              </strong>{' '}
+              and{' '}
+              <strong>
+                imitation learning like{' '}
+                <a href="https://huggingface.co/docs/lerobot/act" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">Action Chunking Transformer (ACT)</a>
+              </strong>.
+            </p>
+            <img 
+              src={`${basePath}/images/portfolio/lerobot-pipeline-koch.png`}
+              alt="LeRobot Pipeline - How imitation learning models are trained"
+              className="w-full rounded-lg shadow-lg mt-4"
+            />
+            <p className="text-sm text-gray-400 text-center">LeRobot Pipeline: Training imitation learning models by Koch robot</p>
+          </div>
         ),
       },
       {
-        title: 'Project Details',
+        title: '1. Data Collection',
         content: (
-          <p>
-            This project demonstrates how robotic arms can learn using{' '}
-            <strong>Visual Language Action (VLA)</strong> models and{' '}
-            <strong>imitation learning</strong>.
-          </p>
+          <div className="space-y-4">
+            <p>
+              The first step is collecting high-quality demonstration data from human teleoperation.
+            </p>
+            
+            <h3 className="text-lg font-semibold text-white mt-6">Dataset Format</h3>
+            <p>
+              We use the <strong>LeRobot dataset format</strong>, which stores episodes as Parquet files 
+              containing <strong> observation(following robot joint states) </strong>, and <strong> action(leading arm's joint states) </strong> and mp4 for top and front camera observation.
+            </p>
+            
+            <div className="bg-gray-800 rounded-lg p-4 mt-4 font-mono text-sm">
+              <p className="text-green-400 mb-2"># Robot Joint States (6-DOF)</p>
+              <ul className="text-gray-300 space-y-1 ml-4">
+                <li>{'"shoulder_pan.pos"'}</li>
+                <li>{'"shoulder_lift.pos"'}</li>
+                <li>{'"elbow_flex.pos"'}</li>
+                <li>{'"wrist_flex.pos"'}</li>
+                <li>{'"wrist_roll.pos"'}</li>
+                <li>{'"gripper.pos"'}</li>
+              </ul>
+              <p className="text-green-400 mb-2 mt-4"># Camera Observations</p>
+              <ul className="text-gray-300 space-y-1 ml-4">
+                <li>{'"observation.images.front"'}</li>
+                <li>{'"observation.images.top"'}</li>
+              </ul>
+            </div>
+            <p className="text-sm text-gray-400 text-center mt-2">LeRobot dataset structure with joint positions and camera observations</p>
+            
+            <h3 className="text-lg font-semibold text-white mt-6">Control Method</h3>
+            <p>
+              Human demonstrations are collected via <strong>teleoperation</strong> using a leader-follower 
+              setup, where the operator controls a leader arm and the follower arm mimics the movements.
+            </p>
+              <img 
+                src={`${basePath}/images/portfolio/koch-teleop.gif`}
+                alt="Leader-follower teleoperation for data collection"
+                className="w-full rounded-lg shadow-lg mt-2"
+              />
+            <p className="text-sm text-gray-400 text-center">Leader-follower teleoperation for data collection</p>
+          </div>
+        ),
+      },
+      {
+        title: '2. Model Training',
+        content: (
+          <div className="space-y-4">
+            <p>
+              After collecting demonstration data, we train the imitation learning model to 
+              predict robot actions from visual observations and language instructions.
+            </p>
+            
+            <h3 className="text-lg font-semibold text-white mt-6">Training Pipeline</h3>
+            <p>
+              The model learns to map camera images and task instructions to action sequences 
+              using supervised learning on the collected demonstrations.
+            </p>
+            <img 
+              src={`${basePath}/images/portfolio/training-pipeline.png`}
+              alt="Model training pipeline"
+              className="w-full rounded-lg shadow-lg mt-2"
+            />
+            <p className="text-sm text-gray-400 text-center">Training pipeline overview</p>
+            
+            <h3 className="text-lg font-semibold text-white mt-6">Training Configuration</h3>
+            <ul className="list-disc pl-6 space-y-1">
+              <li><strong>Batch size:</strong> 32</li>
+              <li><strong>Learning rate:</strong> 1e-4</li>
+              <li><strong>Training epochs:</strong> 100</li>
+              <li><strong>GPU:</strong> NVIDIA RTX 4090</li>
+            </ul>
+          </div>
+        ),
+      },
+      {
+        title: '3. Deployment',
+        content: (
+          <div className="space-y-4">
+            <p>
+              The trained model is deployed on the robot for real-time inference 
+              and autonomous task execution.
+            </p>
+            
+            <h3 className="text-lg font-semibold text-white mt-6">Real-time Inference</h3>
+            <p>
+              The model runs at <strong>10Hz</strong>, predicting action chunks that are 
+              executed by the robot controller in real-time.
+            </p>
+            <video
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="w-full rounded-lg shadow-lg mt-2"
+            >
+              <source src={`${basePath}/videos/deployment-demo.mp4`} type="video/mp4" />
+            </video>
+            <p className="text-sm text-gray-400 text-center">Autonomous task execution after deployment</p>
+            
+            <h3 className="text-lg font-semibold text-white mt-6">System Requirements</h3>
+            <ul className="list-disc pl-6 space-y-1">
+              <li><strong>Inference hardware:</strong> NVIDIA GPU with 8GB+ VRAM</li>
+              <li><strong>Framework:</strong> PyTorch + ROS2 Humble</li>
+              <li><strong>Control frequency:</strong> 10Hz action prediction</li>
+            </ul>
+          </div>
         ),
       },
       {

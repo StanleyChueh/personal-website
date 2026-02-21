@@ -41,12 +41,14 @@
 
 // https://github.com/vercel/next.js/blob/master/packages/next/next-server/server/config.ts
 const repo = "personal-website";
+const isProduction = process.env.NODE_ENV === 'production';
 
 const nextConfig = {
   output: "export",
 
-  basePath: `/${repo}`,
-  assetPrefix: `/${repo}/`,
+  // Only apply basePath in production for GitHub Pages
+  basePath: isProduction ? `/${repo}` : '',
+  assetPrefix: isProduction ? `/${repo}/` : '',
 
   eslint: {
     ignoreDuringBuilds: true,
