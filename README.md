@@ -1,5 +1,11 @@
 yarn dev
 
+https://stanleychueh.github.io/personal-website/
+
+git add .github/workflows/nextjs.yml
+git commit -m ""
+git push origin main
+
 # React JS Resume Website Template
 
 ![ReactJS Resume Website Template](resume-screenshot.jpg?raw=true 'ReactJS Resume Website Template')
