@@ -116,29 +116,185 @@ const projects: Record<string, {
       {
         title: '2. Model Training',
         content: (
-          <div className="space-y-4">
+          <div className="space-y-6">
             <p>
-              After collecting demonstration data, we train the imitation learning model to 
-              predict robot actions from visual observations and language instructions.
+              After collecting demonstration data, we train imitation learning models to 
+              predict robot actions from visual observations. We experimented with three 
+              different approaches: <strong>ACT</strong>, <strong>SmolVLA</strong>, and <strong>GR00T N1.5</strong>.
             </p>
-            
-            <h3 className="text-lg font-semibold text-white mt-6">Training Pipeline</h3>
-            <p>
-              The model learns to map camera images and task instructions to action sequences 
-              using supervised learning on the collected demonstrations.
-            </p>
-            <img 
-              src={`${basePath}/images/portfolio/training-pipeline.png`}
-              alt="Model training pipeline"
-              className="w-full rounded-lg shadow-lg mt-2"
-            />
-            <p className="text-sm text-gray-400 text-center">Training pipeline overview</p>
-            
+
+            {/* ACT Section */}
+            <div className="bg-gray-800/50 rounded-lg p-5 border border-gray-700">
+              <h3 className="text-xl font-bold text-blue-400 mb-3">
+                ACT (Action Chunking Transformer)
+              </h3>
+              <p className="mb-3">
+                A <strong>pure imitation learning</strong> approach that predicts <strong>action sequences("chunks") rather than single actions </strong> . 
+                It uses a transformer encoder-decoder architecture 
+                with a CVAE (Conditional Variational Autoencoder) for modeling action distributions.
+              </p>
+              <div className="my-4">
+                <img 
+                  src={`${basePath}/images/portfolio/act-paper.png`}
+                  alt="ACT Architecture - Action Chunking Transformer from the original paper"
+                  className="w-full rounded-lg shadow-lg"
+                />
+                <p className="text-sm text-gray-400 text-center mt-2">
+                  ACT Architecture (Source: <a href="https://arxiv.org/abs/2304.13705" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">ACT Paper</a>)
+                </p>
+              </div>
+              <div className="grid md:grid-cols-2 gap-4 mt-4">
+                <div>
+                  <h4 className="text-sm font-semibold text-green-400 mb-2">✅ Strengths</h4>
+                  <ul className="text-sm space-y-1 text-gray-300">
+                    <li>• Fast training (no VLM backbone)</li>
+                    <li>• Lightweight (~25M parameters)</li>
+                    <li>• Good for single-task learning</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 className="text-sm font-semibold text-red-400 mb-2">⚠️ Limitations</h4>
+                  <ul className="text-sm space-y-1 text-gray-300">
+                    <li>• No language understanding</li>
+                    <li>• Requires task-specific training</li>
+                    <li>• Limited generalization</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            {/* SmolVLA Section */}
+            <div className="bg-gray-800/50 rounded-lg p-5 border border-gray-700">
+              <h3 className="text-xl font-bold text-orange-400 mb-3">
+                SmolVLA (Lightweight Vision-Language-Action)
+              </h3>
+              <p className="mb-3">
+                A <strong>compact VLA model</strong> that combines vision encoders <strong> (SigLIP) </strong> with a small language 
+                model backbone <strong> (SmolVLM-2) </strong> . It can understand natural language instructions and map them to robot actions, 
+                enabling <strong>language-conditioned control</strong>.
+              </p>
+              <div className="my-4">
+                <img 
+                  src={`${basePath}/images/portfolio/smolvla-paper.png`}
+                  alt="SmolVLA Architecture - Lightweight Vision-Language-Action Model"
+                  className="w-full rounded-lg shadow-lg"
+                />
+                <p className="text-sm text-gray-400 text-center mt-2">
+                  SmolVLA Architecture (Source: <a href="https://arxiv.org/abs/2506.01844" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">SmolVLA Paper</a>)
+                </p>
+              </div>
+              <div className="grid md:grid-cols-2 gap-4 mt-4">
+                <div>
+                  <h4 className="text-sm font-semibold text-green-400 mb-2">✅ Strengths</h4>
+                  <ul className="text-sm space-y-1 text-gray-300">
+                    <li>• Language-conditioned actions</li>
+                    <li>• Better generalization across tasks</li>
+                    <li>• Smaller than full VLAs (~500M params)</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 className="text-sm font-semibold text-red-400 mb-2">⚠️ Limitations</h4>
+                  <ul className="text-sm space-y-1 text-gray-300">
+                    <li>• Slower inference than ACT</li>
+                    <li>• Requires more VRAM (~6GB+)</li>
+                    <li>• Longer training time</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            {/* GR00T N1.5 Section */}
+            <div className="bg-gray-800/50 rounded-lg p-5 border border-gray-700">
+              <h3 className="text-xl font-bold text-green-400 mb-3">
+                GR00T N1.5 (NVIDIA)
+              </h3>
+              <p className="mb-3">
+                NVIDIA's <strong>foundation model for humanoid robots</strong>, designed for generalist 
+                robot control. It features a dual-system architecture with a  vision-language 
+                reasoning system and a action generation system for real-time control.
+              </p>
+              <div className="my-4">
+                <img 
+                  src={`${basePath}/images/portfolio/gr00t-paper.png`}
+                  alt="GR00T N1.5 Architecture - NVIDIA's Foundation Model for Humanoid Robots"
+                  className="w-full rounded-lg shadow-lg"
+                />
+                <p className="text-sm text-gray-400 text-center mt-2">
+                  GR00T N1.5 Architecture (Source: <a href="https://arxiv.org/abs/2503.14734" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">GR00T N1.5 Paper</a>)
+                </p>
+              </div>
+              <div className="grid md:grid-cols-2 gap-4 mt-4">
+                <div>
+                  <h4 className="text-sm font-semibold text-green-400 mb-2">✅ Strengths</h4>
+                  <ul className="text-sm space-y-1 text-gray-300">
+                    <li>• Best zero-shot generalization</li>
+                    <li>• Cross-embodiment transfer</li>
+                    <li>• Rich language understanding</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 className="text-sm font-semibold text-red-400 mb-2">⚠️ Limitations</h4>
+                  <ul className="text-sm space-y-1 text-gray-300">
+                    <li>• Largest model (~2B+ params)</li>
+                    <li>• Requires significant compute</li>
+                    <li>• Motion jitter in some tasks</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            {/* Comparison Table */}
+            <h3 className="text-lg font-semibold text-white mt-8">📊 Model Comparison</h3>
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm border border-gray-700 rounded-lg overflow-hidden">
+                <thead className="bg-gray-800">
+                  <tr>
+                    <th className="px-4 py-3 text-left">Feature</th>
+                    <th className="px-4 py-3 text-center text-blue-400">ACT</th>
+                    <th className="px-4 py-3 text-center text-orange-400">SmolVLA</th>
+                    <th className="px-4 py-3 text-center text-green-400">GR00T N1.5</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-700">
+                  <tr className="bg-gray-900/50">
+                    <td className="px-4 py-2">Language Conditioning</td>
+                    <td className="px-4 py-2 text-center">❌</td>
+                    <td className="px-4 py-2 text-center">✅</td>
+                    <td className="px-4 py-2 text-center">✅</td>
+                  </tr>
+                  <tr className="bg-gray-800/50">
+                    <td className="px-4 py-2">Parameters</td>
+                    <td className="px-4 py-2 text-center">~25M</td>
+                    <td className="px-4 py-2 text-center">~500M</td>
+                    <td className="px-4 py-2 text-center">~2-3B</td>
+                  </tr>
+                  <tr className="bg-gray-900/50">
+                    <td className="px-4 py-2">Training Time</td>
+                    <td className="px-4 py-2 text-center">~2-4 hrs</td>
+                    <td className="px-4 py-2 text-center">~8-12 hrs</td>
+                    <td className="px-4 py-2 text-center">~24+ hrs</td>
+                  </tr>
+                  <tr className="bg-gray-800/50">
+                    <td className="px-4 py-2">Min VRAM</td>
+                    <td className="px-4 py-2 text-center">4GB</td>
+                    <td className="px-4 py-2 text-center">6GB+</td>
+                    <td className="px-4 py-2 text-center">24GB+</td>
+                  </tr>
+                  <tr className="bg-gray-900/50">
+                    <td className="px-4 py-2">Best For</td>
+                    <td className="px-4 py-2 text-center">Single task</td>
+                    <td className="px-4 py-2 text-center">Multi-task</td>
+                    <td className="px-4 py-2 text-center">Generalist</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
             <h3 className="text-lg font-semibold text-white mt-6">Training Configuration</h3>
             <ul className="list-disc pl-6 space-y-1">
-              <li><strong>Batch size:</strong> 32</li>
-              <li><strong>Learning rate:</strong> 1e-4</li>
-              <li><strong>Training epochs:</strong> 100</li>
+              <li><strong>Batch size:</strong> 32 (ACT) / 8 (VLAs)</li>
+              <li><strong>Learning rate:</strong> 1e-4 (ACT) / 2e-5 (VLAs)</li>
+              <li><strong>Training epochs:</strong> 100 (ACT) / 50 (VLAs)</li>
               <li><strong>GPU:</strong> NVIDIA RTX 4090</li>
             </ul>
           </div>
@@ -152,6 +308,55 @@ const projects: Record<string, {
               The trained model is deployed on the robot for real-time inference 
               and autonomous task execution.
             </p>
+
+            {/* Task Setup Section */}
+            <h3 className="text-lg font-semibold text-white mt-6">📋 Task Setup</h3>
+            <p>
+              Before deployment, we define the task setup to ensure consistent evaluation. 
+              This includes specifying object positions, grasp configurations, and success criteria.
+            </p>
+            
+            <div className="bg-gray-800 rounded-lg p-4 mt-4">
+              <h4 className="text-md font-semibold text-blue-400 mb-3">Dataset Formation</h4>
+              <ul className="space-y-2 text-gray-300">
+                <li className="flex items-start">
+                  <span className="text-green-400 mr-2">•</span>
+                  <div>
+                    <strong>Object Position:</strong> Objects are placed within a defined workspace region 
+                    (e.g., 30cm × 30cm area in front of the robot)
+                  </div>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-green-400 mr-2">•</span>
+                  <div>
+                    <strong>Grasp Configuration:</strong> Initial gripper state is fully open; 
+                    grasp is triggered when approaching target object
+                  </div>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-green-400 mr-2">•</span>
+                  <div>
+                    <strong>Initial Pose:</strong> Robot starts from a consistent home position 
+                    for each episode
+                  </div>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-green-400 mr-2">•</span>
+                  <div>
+                    <strong>Success Criteria:</strong> Task is successful when the object reaches 
+                    the target location/state
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+            {/* Task Setup Video */}
+            <img 
+              src={`${basePath}/images/portfolio/three_task_setup.png`}
+              alt="Task setup showing object placement and initial configuration"
+              className="w-full rounded-lg shadow-lg mt-4"
+            />
+            <p className="text-sm text-gray-400 text-center">Task setup demonstration showing object placement and initial configuration</p>
             
             <h3 className="text-lg font-semibold text-white mt-6">Real-time Inference</h3>
             <p>
